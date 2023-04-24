@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS tags;
 
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,4 +15,25 @@ CREATE TABLE post (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
+);
+
+CREATE TABLE photos(
+  photo_id SERIAL PRIMARY KEY,
+  photo_path TEXT NOT NULL,
+  user_id  INTEGER UNIQUE NOT NULL,
+  tag_id  INTERGER UNIQUE,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (tag_id) REFERENCES tags(tag_id)
+
+);
+
+CREATE TABLE tags(
+  tag_id SERIAL PRIMARY KEY,
+  tag TEXT NOT NULL,
+  user_id INTEGER UNIQUE NOT NULL,
+  foto_id INTEFER UNIQUE NOT NULL,
+  FOREIGN KEY(foto_id) REFERENCES photos(photo_id),
+  FOREIGN KEY (user_id) REFERENCES user(id)
+
+  
 );
